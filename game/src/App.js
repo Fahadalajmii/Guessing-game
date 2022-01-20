@@ -12,25 +12,36 @@ function App() {
     value = parseInt(value);
     setYou(value);
   };
+  const [attempts, setAttempts] = useState(5);
+  const wisdom = () => {};
+  const surrender = () => {
+    alert("I knew you would surrender in the end");
+    setAttempts(0);
+  };
 
   let hint = "";
   const banish = () => {
-    if (you === goal) {
+    if (you === goal && attempts > 0) {
       hint = "you have won";
-      console.log(hint);
+      console.log(attempts);
       alert(hint);
-    } else if (Math.abs(you - goal) < 6) {
+    } else if (Math.abs(you - goal) < 6 && attempts > 0) {
       hint = "you are very close!";
-      console.log(hint);
-      alert(hint);
-    } else if (Math.abs(you - goal) < 11) {
+      setAttempts(attempts - 1);
+      console.log(attempts);
+      alert(`${hint} ${attempts} attempts left`);
+    } else if (Math.abs(you - goal) < 11 && attempts > 0) {
       hint = "you are close!";
-      console.log(hint);
-      alert(hint);
-    } else {
+      setAttempts(attempts - 1);
+      console.log(attempts);
+      alert(`${hint} ${attempts}attempts left`);
+    } else if (attempts > 0) {
       hint = "haha ! you are not near the answer!";
-      console.log(hint);
-      alert(hint);
+      setAttempts(attempts - 1);
+      console.log(attempts);
+      alert(`${hint} ${attempts} attempts left`);
+    } else {
+      alert("you have lost");
     }
   };
   return (
@@ -52,8 +63,8 @@ function App() {
         <button onClick={banish}>Bannish</button>
         <br></br>
         <br></br>
-        <button>Surrender</button>
-        <button>Seek Wisdom</button>
+        <button onClick={surrender}>Surrender</button>
+        <button onClick={wisdom}>Seek Wisdom</button>
       </div>
     </div>
   );
